@@ -1,19 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AddressBook.Models;
 
 public class Book
 {
-    public Guid Id { get; init; }
-    [Required]
-    public City City { get; set; }
-    [Required]
-    [MaxLength(20)]
+    public int Id { get; init; }
+    public int CityId { get; set; }
     public string FirstName { get; set; }
-    [Required]
-    [MaxLength(40)]
     public string LastName { get; set; }
-    [Required]
-    [MaxLength(80)]
     public string? CompanyName { get; set; }
+    public City City { get; set; } = null!;
 }

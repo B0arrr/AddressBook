@@ -1,11 +1,12 @@
 ﻿using System.Linq.Expressions;
+using AddressBook.DTOs;
 using AddressBook.Interfaces;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
 namespace AddressBook.CRUD;
 
-public class CRUDGenetic<TModel, TDto>(IContext dbContext, IMapper mapper): ICRUDGeneric<TModel, TDto>
+public class CRUDGeneric<TModel, TDto>(IContext dbContext, IMapper mapper): ICRUDGeneric<TModel, TDto>
     where TModel : class
     where TDto : class
 {

@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -28,11 +27,12 @@ namespace AddressBook.Migrations
                 name: "Books",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
                     CityId = table.Column<int>(type: "INTEGER", nullable: false),
                     FirstName = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
                     LastName = table.Column<string>(type: "TEXT", maxLength: 40, nullable: false),
-                    CompanyName = table.Column<string>(type: "TEXT", maxLength: 80, nullable: false)
+                    CompanyName = table.Column<string>(type: "TEXT", maxLength: 80, nullable: true)
                 },
                 constraints: table =>
                 {

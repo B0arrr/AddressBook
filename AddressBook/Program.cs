@@ -1,5 +1,6 @@
+using AddressBook.CRUD;
 using AddressBook.Interfaces;
-using AddressBook.Migrations;
+using AddressBook.Models;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,8 +11,9 @@ builder.Services.AddDbContext<AddressBookDbContext>(db =>
 {
     db.UseSqlite(builder.Configuration.GetConnectionString("ConnectionString"));
 });
-builder.Services.AddScoped(typeof(ICRUDGeneric<,>), typeof(ICRUDGeneric<,>));
+builder.Services.AddScoped(typeof(ICRUDGeneric<,>), typeof(CRUDGeneric<,>));
 builder.Services.AddScoped<IContext, AddressBookDbContext>();
+// builder.Services.AddScoped<IAddressBookService, AddressBookService>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
