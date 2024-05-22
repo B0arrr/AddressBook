@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AddressBook.Migrations;
+namespace AddressBook.Models;
 
 public class Book
 {

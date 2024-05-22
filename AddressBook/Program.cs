@@ -9,6 +9,7 @@ builder.Services.AddDbContext<AddressBookDbContext>(db =>
 {
     db.UseSqlite(builder.Configuration.GetConnectionString("ConnectionString"));
 });
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

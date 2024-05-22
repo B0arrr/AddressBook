@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AddressBook.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace AddressBook.Migrations;
 
