@@ -6,13 +6,20 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AddressBook.CRUD;
 
-public class CRUDGeneric<TModel, TDto>(IContext dbContext, IMapper mapper): ICRUDGeneric<TModel, TDto>
+public class CRUDGeneric<TModel, TDto>(IContext dbContext, IMapper mapper) : ICRUDGeneric<TModel, TDto>
     where TModel : class
     where TDto : class
 {
     public async Task<IEnumerable<TDto>> GetAll(Expression<Func<TModel, bool>>? where = null, params string[] includes)
     {
-        var entities = await dbContext.Set<TModel>().ToListAsync();
+        var query = ApplyIncludes(dbContext.Set<TModel>(), includes);
+
+        if (where != null)
+        {
+            query = query.Where(where);
+        }
+
+        var entities = await query.ToListAsync();
         return mapper.Map<IEnumerable<TDto>>(entities);
     }
 
@@ -33,7 +40,8 @@ public class CRUDGeneric<TModel, TDto>(IContext dbContext, IMapper mapper): ICRU
         return mapper.Map<TDto>(entity);
     }
 
-    public async Task<TDto> Update(TDto dto, Expression<Func<TModel, bool>>? where = null, params Expression<Func<TModel, object>>[] references)
+    public async Task<TDto> Update(TDto dto, Expression<Func<TModel, bool>>? where = null,
+        params Expression<Func<TModel, object>>[] references)
     {
         var query = dbContext.Set<TModel>().AsQueryable();
 
@@ -59,6 +67,12 @@ public class CRUDGeneric<TModel, TDto>(IContext dbContext, IMapper mapper): ICRU
 
         return mapper.Map<TDto>(entity);
     }
+
+    protected IQueryable<TModel> ApplyIncludes(IQueryable<TModel> query, params string[] includes)
+    {
+        return includes.Aggregate(query, (current, include) => current.Include(include));
+    }
+
     private async Task LoadReferences(TModel entity, IEnumerable<Expression<Func<TModel, object>>> references)
     {
         foreach (var reference in references)
